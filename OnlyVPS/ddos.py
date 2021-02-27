@@ -40,7 +40,7 @@ def SaveProxies(content):
 
 def WarnUpdate(versao_att):
 	link = f"https://github.com/luiz1n/DDoS/releases/tag/{versao_att}"
-	print(f"Existe uma nova versão do programa, baixe-a em {link}")
+	return link
 
 def CheckInstaller():
 	for dependencie in open(_path_requirements, "r"):
@@ -63,7 +63,7 @@ def CheckUpdates():
 
 	versao_atualizada = requests.get("https://pastebin.com/raw/hbF8RiMS").text
 	if _version != versao_atualizada.strip():
-		WarnUpdate(versao_atualizada)
+		Error(f"[Error] Existe uma nova versão do programa, instale-a em {WarnUpdate(versao_atualizada)}")
 		exit()
 
 	else:
