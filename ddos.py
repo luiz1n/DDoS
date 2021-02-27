@@ -46,7 +46,7 @@ def CheckInstaller():
 	for dependencie in open(_path_requirements, "r"):
 		dependencie = dependencie.strip()
 		try:
-			__import__(dependencie.strip())
+			__import__(dependencie)
 		except Exception as e:
 			print(e)
 			import_name = re.search("'(.+)'", str(e)).group()
