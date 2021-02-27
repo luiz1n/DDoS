@@ -1,3 +1,4 @@
+import re
 import time
 import threading
 import os
@@ -37,23 +38,20 @@ def SaveProxies(content):
 	with open(_path_proxies, 'wb') as file:
 		file.write(content)
 
-def checkGoogle(versao_att):
-	if platform.system() == "Windows":
-		"https://github.com/luiz1n/DDoS/releases/download/1.1/DDoS.zip"
-		os.system(f'start chrome github.com/luiz1n/DDoS/releases/download/{versao_att}/DDoS.zip')
-	else:
-		os.system(f"google-chrome github.com/luiz1n/DDoS/releases/download/{versao_att}/DDoS.zip")
+def WarnUpdate(versao_att):
+	link = f"https://github.com/luiz1n/DDoS/releases/tag/{versao_att}"
+	print(f"Existe uma nova versão do programa, baixe-a em {link}")
 
 def CheckInstaller():
-	try:
-		import requests
-		import colorama
-
-	except:
-		print('\n[ERRO] -> Instalando requerimentos...')
-		time.sleep(1)
-		os.system(f"python -m pip install -r {_path_requirements}")
-		CheckClear()
+	for dependencie in open(_path_requirements, "r"):
+		dependencie = dependencie.strip()
+		try:
+			__import__(dependencie.strip())
+		except Exception as e:
+			print(e)
+			import_name = re.search("'(.+)'", str(e)).group()
+			dependencie_not_installed = str(import_name).replace("'", "")
+			os.system(f"python -m pip install {dependencie_not_installed}")
 
 CheckInstaller()
 
@@ -65,10 +63,7 @@ def CheckUpdates():
 
 	versao_atualizada = requests.get("https://pastebin.com/raw/hbF8RiMS").text
 	if _version != versao_atualizada.strip():
-		Error(f'{_version} | {versao_atualizada}')
-		Error("[Error] -> Existe uma nova versão do programa, redirecionando...")
-		time.sleep(1)
-		checkGoogle(versao_atualizada)
+		WarnUpdate(versao_atualizada)
 		exit()
 
 	else:
