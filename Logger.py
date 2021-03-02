@@ -1,6 +1,7 @@
 from colorama import init, Fore, Style
 
-init(convert=True)
+init()
+
 estilo = Style.BRIGHT
 verde = Fore.GREEN
 vermelho = Fore.RED
