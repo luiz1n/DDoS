@@ -62,7 +62,7 @@ from fake_useragent import UserAgent
 def CheckUpdates():
 
 	versao_atualizada = requests.get("https://pastebin.com/raw/hbF8RiMS").text
-	if _version != versao_atualizada.strip():
+	if str(_version).strip() != versao_atualizada.strip():
 		Error(f"[Error] Existe uma nova versão do programa, instale-a em {WarnUpdate(versao_atualizada)}")
 		exit()
 
