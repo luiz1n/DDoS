@@ -51,7 +51,10 @@ def CheckInstaller():
 			print(e)
 			import_name = re.search("'(.+)'", str(e)).group()
 			dependencie_not_installed = str(import_name).replace("'", "")
-			os.system(f"python -m pip install {dependencie_not_installed}")
+			if platform.system() == "Windows":
+				os.system(f"python -m pip install {dependencie_not_installed}")
+			else:
+				os.system(f"pip3 install {dependencie_not_installed}")
 
 CheckInstaller()
 
@@ -102,12 +105,9 @@ def Generate():
 def HowToUse():
 	os.system("cls")
 	Error('''
-
 Modo de uso: ddos.py <url> <threads>
 
-Exemplo: ddos.py https://google.com/ 300 
-
-		''')
+Exemplo: ddos.py https://google.com/ 300 ''')
 
 CheckInternet()
 Generate()
