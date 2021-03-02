@@ -9,13 +9,13 @@ amarelo = Fore.YELLOW
 magenta = Fore.MAGENTA
 
 def Sucesso(msg):
-	print(f'{verde}{estilo}{msg}')
+    print(f'{verde}{estilo}{msg}')
 
 def Error(msg):
-	print(f'{vermelho}{estilo}{msg}')
+    print(f'{vermelho}{estilo}{msg}')
 
 def Aviso(msg):
-	print(f'{amarelo}{estilo}{msg}')
+    print(f'{amarelo}{estilo}{msg}')
 
 def Personalize(color,style, msg):
-	print(f'{color}{style}{msg}')
+    print(f'{color}{style}{msg}')
