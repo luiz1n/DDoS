@@ -77,7 +77,7 @@ from fake_useragent import UserAgent
 
 def CheckUpdates():
 	versao_atualizada = requests.get("https://pastebin.com/raw/hbF8RiMS").text
-	if _version != versao_atualizada.strip():
+	if _version.strip() != versao_atualizada.strip():
 		WarnUpdate(versao_atualizada)
 		exit()
 	else:
